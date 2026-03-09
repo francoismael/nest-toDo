@@ -9,7 +9,7 @@ import { ScheduledTaskModule } from './modules/scheduled-task/scheduled-task.mod
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://franco:franco9006090@cluster0.tpd7c.mongodb.net/ToDo'),
+    MongooseModule.forRoot(process.env['MONGODB_URI'] as string),
     AuthModule,
     TaskModule,
     ScheduledTaskModule,
