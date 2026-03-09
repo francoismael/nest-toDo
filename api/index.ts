@@ -13,7 +13,7 @@ const createNestServer = async (expressInstance: express.Express) => {
   );
 
   app.enableCors({
-    origin: ['http://localhost:4200', 'https://ng-to-do.vercel.app'],
+    origin: ['http://localhost:4200', 'https://lamina-asa.vercel.app'],
     credentials: true,
   });
 
