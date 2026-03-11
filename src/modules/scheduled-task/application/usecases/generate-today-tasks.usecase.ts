@@ -65,6 +65,7 @@ export class GenerateTodayTasksUseCase {
         endTime,
         subTasks,
         (t.priority as TaskPriorityEnum) ?? TaskPriorityEnum.NORMAL,
+        true,
       );
 
       await this.taskRepo.createTask(task);

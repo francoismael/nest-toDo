@@ -14,6 +14,7 @@ export class Task {
     public endTime?: Date,
     subTasks?: SubTask[],
     public priority: TaskPriorityEnum = TaskPriorityEnum.NORMAL,
+    public isScheduled: boolean = false,
   ) {
     this.subTasks = subTasks ?? [];
   }

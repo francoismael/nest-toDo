@@ -24,6 +24,7 @@ export class MongoTaskRepository implements TaskRepository {
       endTime: task.endTime,
       status: task.status,
       priority: task.priority,
+      isScheduled: task.isScheduled,
       subTasks: task.subTasks.map((sub) => ({
         title: sub.title,
         status: sub.status,
@@ -44,6 +45,7 @@ export class MongoTaskRepository implements TaskRepository {
         (sub) => new SubTask(sub._id.toString(), sub.title, sub.status),
       ),
       saved.priority ?? TaskPriorityEnum.NORMAL,
+      saved.isScheduled ?? false,
     );
   }
 
@@ -64,6 +66,7 @@ export class MongoTaskRepository implements TaskRepository {
             (sub) => new SubTask(sub._id.toString(), sub.title, sub.status),
           ),
           task.priority ?? TaskPriorityEnum.NORMAL,
+          task.isScheduled ?? false,
         ),
     );
   }
@@ -125,6 +128,7 @@ export class MongoTaskRepository implements TaskRepository {
         (sub) => new SubTask(sub._id.toString(), sub.title, sub.status),
       ) ?? [],
       task.priority ?? TaskPriorityEnum.NORMAL,
+      task.isScheduled ?? false,
     );
   }
 
@@ -173,6 +177,7 @@ export class MongoTaskRepository implements TaskRepository {
             (sub) => new SubTask(sub._id.toString(), sub.title, sub.status),
           ) ?? [],
           task.priority ?? TaskPriorityEnum.NORMAL,
+          task.isScheduled ?? false,
         ),
     );
   }

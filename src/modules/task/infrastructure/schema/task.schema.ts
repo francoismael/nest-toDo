@@ -10,6 +10,7 @@ export interface TaskDocument extends Document<Types.ObjectId> {
   endTime?: Date;
   status: TaskStatusEnum;
   priority: TaskPriorityEnum;
+  isScheduled: boolean;
   subTasks: {
     _id: Types.ObjectId;
     title: string;
@@ -40,6 +41,8 @@ export const TaskSchema = new Schema<TaskDocument>(
       enum: Object.values(TaskPriorityEnum),
       default: TaskPriorityEnum.NORMAL,
     },
+
+    isScheduled: { type: Boolean, default: false },
 
     subTasks: [
       {
