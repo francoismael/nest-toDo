@@ -34,5 +34,6 @@ import { JwtStrategy } from './strategies/strategy.jwt';
     TokenBlacklistService,
     JwtStrategy,
   ],
+  exports: [TokenBlacklistService, JwtStrategy],
 })
 export class AuthModule {}
