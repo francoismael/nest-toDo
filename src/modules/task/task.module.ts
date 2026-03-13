@@ -7,7 +7,6 @@ import { MongoTaskRepository } from './infrastructure/repositories/mongo-task.re
 import { TaskSchema } from './infrastructure/schema/task.schema';
 import { TaskRepositoryToken } from './application/port/task.repository.token';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { JwtStrategy } from '../auth/strategies/strategy.jwt';
 import { FindAllTasksUseCase } from './application/usecases/find-all-tasks.usecase';
 import { UpdateTaskUsecase } from './application/usecases/update-task.usecase';
 import { DeleteTaskUseCase } from './application/usecases/delete-task.usecase';
@@ -15,13 +14,16 @@ import { UpdateTaskStatusUseCase } from './application/usecases/update-task-stat
 import { UpdateSubTaskStatusUseCase } from './application/usecases/update-subtask-status.usecase';
 import { DeleteSubTaskUseCase } from './application/usecases/delete-subtask.usecase';
 import { SearchTaskUseCase } from './application/usecases/search-task.usecase';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Task', schema: TaskSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: 'Task', schema: TaskSchema }]),
+    AuthModule,
+  ],
   controllers: [TaskController],
   providers: [
     CreateTaskUsecase,
-    JwtStrategy,
     FindAllTasksUseCase,
     UpdateSubTaskStatusUseCase,
     DeleteSubTaskUseCase,
@@ -30,8 +32,7 @@ import { SearchTaskUseCase } from './application/usecases/search-task.usecase';
     UpdateTaskUsecase,
     DeleteTaskUseCase,
     JwtAuthGuard,
-
-{ provide: TaskRepositoryToken, useClass: MongoTaskRepository }
+    { provide: TaskRepositoryToken, useClass: MongoTaskRepository },
   ],
   exports: [{ provide: TaskRepositoryToken, useClass: MongoTaskRepository }],
 })
