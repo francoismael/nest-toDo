@@ -11,7 +11,6 @@ import { ScheduledTaskSchema } from './infrastructure/schema/scheduled-task.sche
 import { ScheduledTaskRepositoryToken } from './application/port/scheduled-task.repository.token';
 import { TaskModule } from '../task/task.module';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { JwtStrategy } from '../auth/strategies/strategy.jwt';
 
 @Module({
   imports: [
@@ -26,7 +25,6 @@ import { JwtStrategy } from '../auth/strategies/strategy.jwt';
     ToggleScheduledTaskUseCase,
     GenerateTodayTasksUseCase,
     JwtAuthGuard,
-    JwtStrategy,
     { provide: ScheduledTaskRepositoryToken, useClass: MongoScheduledTaskRepository },
   ],
 })
