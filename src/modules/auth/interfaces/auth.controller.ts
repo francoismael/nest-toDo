@@ -7,9 +7,11 @@ import { ChangePasswordUsecase } from '../application/usecases/change-password.u
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { TokenBlacklistService } from '../application/services/token-blacklist.service';
 
 interface RequestWithUser extends Request {
   user: { userId: string };
+  headers: { authorization?: string };
 }
 
 @Controller('auth')
@@ -20,6 +22,7 @@ export class AuthController {
     private readonly getProfileUsecase: GetProfileUsecase,
     private readonly updateProfileUsecase: UpdateProfileUsecase,
     private readonly changePasswordUsecase: ChangePasswordUsecase,
+    private readonly tokenBlacklist: TokenBlacklistService,
   ) {}
 
   @Post('register')
@@ -45,6 +48,14 @@ export class AuthController {
     @Body() dto: { username?: string; email?: string },
   ) {
     return this.updateProfileUsecase.execute(req.user.userId, dto.username, dto.email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  async logout(@Request() req: RequestWithUser) {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (token) this.tokenBlacklist.add(token);
+    return { message: 'Déconnecté avec succès' };
   }
 
   @UseGuards(JwtAuthGuard)
